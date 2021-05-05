@@ -1,8 +1,8 @@
-name: "OpenSpigotPluginExample"
-description: "Example for OpenPlugin's"
+name: "OpenSpigotChat"
+description: "Super Spigot Chat Plugin"
 author: "https://fazziclay.ru/"
-website: "https://github.com/fazziclay/OpenSpigotPluginExample/"
-main: "ru.fazziclay.openspigotpluginexample.OpenSpigotPluginExample"
+website: "https://github.com/fazziclay/OpenSpigotChat/"
+main: "ru.fazziclay.openspigotchat.OpenSpigotChat"
 api-version: 1.13
-load: POSTWORLD
-version: "0.0"
+load: STARTUP
+version: "0.1"

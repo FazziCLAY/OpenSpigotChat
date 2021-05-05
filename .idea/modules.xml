@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/OpenSpigotPluginExample.iml" filepath="$PROJECT_DIR$/.idea/OpenSpigotPluginExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/OpenSpigotChat.iml" filepath="$PROJECT_DIR$/.idea/OpenSpigotChat.iml" />
     </modules>
   </component>
 </project>

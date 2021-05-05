@@ -1,12 +1,12 @@
-package ru.fazziclay.openspigotpluginexample;
+package ru.fazziclay.openspigotchat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.fazziclay.openspigotpluginexample.util.Debug;
-import ru.fazziclay.openspigotpluginexample.util.Utils;
+import ru.fazziclay.openspigotchat.util.Debug;
+import ru.fazziclay.openspigotchat.util.Utils;
 
-public class OpenSpigotPluginExample extends JavaPlugin {
+public class OpenSpigotChat extends JavaPlugin {
     public static FileConfiguration pluginConfig;
 
     @Override

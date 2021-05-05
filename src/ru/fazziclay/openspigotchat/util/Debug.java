@@ -1,6 +1,6 @@
-package ru.fazziclay.openspigotpluginexample.util;
+package ru.fazziclay.openspigotchat.util;
 
-import ru.fazziclay.openspigotpluginexample.Config;
+import ru.fazziclay.openspigotchat.Config;
 
 public class Debug {
     public static void debug(String message) {

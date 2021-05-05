@@ -1,4 +1,4 @@
-package ru.fazziclay.openspigotpluginexample.util;
+package ru.fazziclay.openspigotchat.util;
 
 import org.bukkit.Bukkit;
 
