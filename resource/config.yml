@@ -1,2 +1,29 @@
-test:
-  message: "Hello World!"
+joinPlayer:
+  enable: true
+  text: '["",{"text":"%player_nickname%","color":"yellow","clickEvent":{"action":"suggest_command","value":"tell %player_nickname%"},"hoverEvent":{"action":"show_text","contents":"Click to send DM"}},{"text":" join to server!","color":"yellow"}]'
+
+leavePlayer:
+  enable: true
+  text: '{"text":"%player_nickname% leave from server!","color":"yellow"}'
+
+directMessage:
+  enable: true
+  commands:
+    - msg
+    - tell
+    - w
+
+  recipientMessage: ''
+  senderMessage: ''
+
+chat:
+  default: local
+  local:
+    prefix: none
+
+  global:
+    prefix: "!"
+    pattern: "%player_nickname%:"
+
+
+version: 0
