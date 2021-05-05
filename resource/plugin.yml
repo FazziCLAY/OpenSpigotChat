@@ -1,0 +1,8 @@
+name: "OpenSpigotPluginExample"
+description: "Example for OpenPlugin's"
+author: "https://fazziclay.ru/"
+website: "https://github.com/fazziclay/OpenSpigotPluginExample/"
+main: "ru.fazziclay.openspigotpluginexample.OpenSpigotPluginExample"
+api-version: 1.13
+load: POSTWORLD
+version: "0.0"
