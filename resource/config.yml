@@ -17,13 +17,34 @@ directMessage:
   senderMessage: ''
 
 chat:
+  list: [local, global, roleplay, anynamechatname]
   default: local
+
   local:
+    range: 50
     prefix: none
+    messageType: chat
+    pattern: '[{"translate":"chat.type.text","with":[{"text":"%player_nickname%","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname% "},"hoverEvent":{"action":"show_text","contents":["Click to send a private message"]}},"%message_content%"]}]'
+
 
   global:
+    range: -1
     prefix: "!"
-    pattern: "%player_nickname%:"
+    messageType: chat
+    pattern: '[{"text": "[G]", "color": "gray"}, {"text": " "}, {"translate":"chat.type.text","with":[{"text":"%player_nickname%","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname% "},"hoverEvent":{"action":"show_text","contents":["Click to send a private message"]}},"%message_content%"]}]'
+
+
+  roleplay:
+    range: 50
+    prefix: "*"
+    messageType: chat
+    pattern: '[{"text": "*%player_nickname% %message_content%*"}]'
+
+  anynamechatname:
+    range: 10
+    messageType: system
+    prefix: "-"
+    pattern: '[{"text": "[Example] %player_nickname%: %message_content%", "color": "red", "italic": true}]'
 
 
 version: 0

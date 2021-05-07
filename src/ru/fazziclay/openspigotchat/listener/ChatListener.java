@@ -1,31 +1,65 @@
 package ru.fazziclay.openspigotchat.listener;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.spigotmc.SpigotCommand;
+import ru.fazziclay.openspigotchat.Chat;
+import ru.fazziclay.openspigotchat.Config;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
+import ru.fazziclay.openspigotchat.util.Debug;
+
+import java.util.regex.Pattern;
+
 
 public class ChatListener implements Listener {
     @EventHandler(
-            priority = EventPriority.LOWEST,
-            ignoreCancelled = true
+            priority = EventPriority.HIGHEST
     )
     public void onChat(AsyncPlayerChatEvent event) {
         String player_nickname = event.getPlayer().getName();
+        String player_uuid = event.getPlayer().getUniqueId().toString();
         String messageContent = event.getMessage();
 
-        if (event.isCancelled()) {
-            return;
+        for (Chat chat : Chat.chats) {
+            Debug.debug("onChat(...): for: chat.type=" + chat.type);
+            if (chat.prefix == null) {
+                Debug.debug("onChat(...): for: prefix==null: continue;");
+                continue;
+            }
+            if (messageContent.startsWith(chat.prefix) && messageContent.length() > chat.prefix.length()) {
+                Debug.debug("onChat(...): for: prefix detected. chat.prefix="+chat.prefix);
+                chat.send(event.getPlayer(), chat.pattern
+                        .replace("%player_nickname%", player_nickname)
+                        .replace("%player_uuid%", player_uuid)
+                        .replace("%message_content%", messageContent.replaceFirst(Pattern.quote(chat.prefix), "")),
+                        chat.range,
+                        chat.messageType);
+                event.setCancelled(true);
+                return;
+            }
         }
-        TextComponent message = ChatUtils.convertToTextComponent("[{\"text\":\"[L]\",\"color\":\"aqua\"},{\"text\":\" \"},{\"text\":\"%player_nickname%\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"tell %player_nickname%\"},\"hoverEvent\":{\"action\":\"show_text\",\"contents\":\"Click to send DM!\"}},{\"text\":\": %message%\"}]"
-        .replace("%player_nickname%", player_nickname)
-        .replace("%message%", messageContent));
 
-        Bukkit.spigot().broadcast(message);
+        Chat defaultChat = Chat.getChatByType(Config.chatDefault);
+        if (defaultChat != null) {
+            defaultChat.send(event.getPlayer(), defaultChat.pattern
+                    .replace("%player_nickname%", player_nickname)
+                    .replace("%player_uuid%", player_uuid)
+                    .replace("%message_content%", messageContent),
+                    defaultChat.range,
+                    defaultChat.messageType);
+
+        } else {
+            event.getPlayer().spigot().sendMessage(ChatMessageType.SYSTEM, new TextComponent("<Hardcoded text>: Error from OpenSpigotChat plugin. DefaultChat == null. Please contact server administrator or plugin developer https://fazziclay.ru/"));
+        }
         event.setCancelled(true);
     }
 }
