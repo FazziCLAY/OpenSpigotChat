@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
 import ru.fazziclay.openspigotchat.util.Debug;
+import ru.fazziclay.openspigotchat.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,5 +59,7 @@ public class Chat {
         for (Player recipient : recipients) {
             recipient.spigot().sendMessage(messageType, sender.getUniqueId(), message);
         }
+
+        Utils.print(message.toLegacyText());
     }
 }

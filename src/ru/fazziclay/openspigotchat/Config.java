@@ -11,6 +11,10 @@ public class Config {
     // Config
     public static FileConfiguration a = OpenSpigotChat.pluginConfig;
 
+    public static String messageJoinPlayer = a.getString("message.joinPlayer");
+    public static String messageLeavePlayer = a.getString("message.leavePlayer");
+    public static String messageKickPlayer = a.getString("message.kickPlayer");
+
     public static List<String> chatList = a.getStringList("chat.list");
     public static String chatDefault= a.getString("chat.default");
 }

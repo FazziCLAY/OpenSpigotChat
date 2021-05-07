@@ -1,26 +1,90 @@
 package ru.fazziclay.openspigotchat.listener;
 
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.spigotmc.SpigotCommand;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import ru.fazziclay.openspigotchat.Chat;
 import ru.fazziclay.openspigotchat.Config;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
 import ru.fazziclay.openspigotchat.util.Debug;
+import ru.fazziclay.openspigotchat.util.Utils;
 
 import java.util.regex.Pattern;
 
 
 public class ChatListener implements Listener {
+    @EventHandler(
+            priority = EventPriority.HIGHEST
+    )
+    public void onJoin(PlayerJoinEvent event) {
+        String player_nickname = event.getPlayer().getName();
+        String player_uuid = event.getPlayer().getUniqueId().toString();
+
+        if (event.getJoinMessage() == null) {
+            return;
+        }
+
+        BaseComponent message = ChatUtils.convertToTextComponent(Config.messageJoinPlayer
+                .replace("%player_nickname%", player_nickname)
+                .replace("%player_uuid%", player_uuid));
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.spigot().sendMessage(ChatMessageType.SYSTEM, message);
+        }
+        Utils.print(message.toLegacyText());
+        event.setJoinMessage(null);
+    }
+
+    @EventHandler(
+            priority = EventPriority.HIGHEST
+    )
+    public void onLeave(PlayerQuitEvent event) {
+        String player_nickname = event.getPlayer().getName();
+        String player_uuid = event.getPlayer().getUniqueId().toString();
+
+        if (event.getQuitMessage() == null) {
+            return;
+        }
+
+        BaseComponent message = ChatUtils.convertToTextComponent(Config.messageLeavePlayer
+                .replace("%player_nickname%", player_nickname)
+                .replace("%player_uuid%", player_uuid));
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.spigot().sendMessage(ChatMessageType.SYSTEM, message);
+        }
+        Utils.print(message.toLegacyText());
+        event.setQuitMessage(null);
+    }
+
+    @EventHandler(
+            priority = EventPriority.HIGHEST
+    )
+    public void onKick(PlayerKickEvent event) {
+        String player_nickname = event.getPlayer().getName();
+        String player_uuid = event.getPlayer().getUniqueId().toString();
+
+        BaseComponent message = ChatUtils.convertToTextComponent(Config.messageKickPlayer
+                .replace("%player_nickname%", player_nickname)
+                .replace("%player_uuid%", player_uuid)
+                .replace("%reason%", event.getReason()));
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.spigot().sendMessage(ChatMessageType.SYSTEM, message);
+        }
+        Utils.print(message.toLegacyText());
+        event.setLeaveMessage(null);
+    }
+
     @EventHandler(
             priority = EventPriority.HIGHEST
     )
