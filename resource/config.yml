@@ -1,35 +1,43 @@
-messages:
+# Plugin by https://fazziclay.ru/
+# Use https://minecraftjson.com to generate Minecraft JSONComponent.
+
+unregisterCommands:
+  - seed
+  - pl
+  - plugins
+  - version
+  - ver
+
+message:
   joinPlayer: '["",{"text":"%player_nickname%","color":"yellow","clickEvent":{"action":"suggest_command","value":"tell %player_nickname%"},"hoverEvent":{"action":"show_text","contents":"Click to send DM"}},{"text":" join to server!","color":"yellow"}]'
   leavePlayer: '{"text":"%player_nickname% leave from server!","color":"yellow"}'
-  kickPlayer: '%player_nickname% Kicked from this server!'
+
+directMessage:
+  commands:
+    - tell
+    - msg
+    - w
+
+  senderPattern: '{"text":"Message Sent!","color":"dark_green","clickEvent":{"action":"suggest_command","value":"/tell %recipient_nickname% "},"hoverEvent":{"action":"show_text","contents":[{"text":"~~~~ PrivateMessage ~~~~","color":"blue"},"%current_time%","\n","%sender_nickname% ",{"text":"->","color":"gold"},{"text":" %recipient_nickname%","color":"green"},"\n",{"text":"(Click to reply)","color":"light_purple"},"\n","\n",{"text":"%message_content%","color":"#FFFFFF"}]}}'
+  recipientPattern: '{"text":"%sender_nickname% -> %recipient_nickname%: %message_content%","color":"dark_green","clickEvent":{"action":"suggest_command","value":"/tell %sender_nickname% "},"hoverEvent":{"action":"show_text","contents":[{"text":"~~~~ PrivateMessage ~~~~","color":"blue"},"%current_time%","\n","%sender_nickname% ",{"text":"->","color":"gold"},{"text":" %recipient_nickname%","color":"green"},"\n",{"text":"(Click to reply)","color":"light_purple"},"\n","\n",{"text":"%message_content%","color":"#FFFFFF"}]}}'
+  playerNotFound: '{"translate":"argument.entity.notfound.player","color":"red"}'
+
+  argumentsName: ["recipient", "message"]
 
 chat:
-  list: [local, global, roleplay, anynamechatname]
-  default: local
+  list: [example]
+  default: example
 
-  local:
+  example:
     range: 50
     prefix: none
+    #chatBoobles:
+    #  enable: true
+    #  format: "&a&l"
+    #  maxWidth: 20
+    #  maxLines: 5
+    #  readSpeed: 120
     messageType: chat
     pattern: '[{"translate":"chat.type.text","with":[{"text":"%player_nickname%","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname% "},"hoverEvent":{"action":"show_text","contents":["Click to send a private message"]}},"%message_content%"]}]'
-
-  global:
-    range: -1
-    prefix: "!"
-    messageType: chat
-    pattern: '[{"text": "[G]", "color": "gray"}, {"text": " "}, {"translate":"chat.type.text","with":[{"text":"%player_nickname%","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname% "},"hoverEvent":{"action":"show_text","contents":["Click to send a private message"]}},"%message_content%"]}]'
-
-  roleplay:
-    range: 50
-    prefix: "*"
-    messageType: chat
-    pattern: '[{"text": "*%player_nickname% %message_content%*"}]'
-
-  anynamechatname:
-    range: 10
-    messageType: system
-    prefix: "-"
-    pattern: '[{"text": "[Example] %player_nickname%: %message_content%", "color": "red", "italic": true}]'
-
 
 version: 0

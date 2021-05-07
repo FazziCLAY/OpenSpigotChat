@@ -2,12 +2,10 @@ package ru.fazziclay.openspigotchat;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.BanEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
-import ru.fazziclay.openspigotchat.util.Debug;
+import ru.fazziclay.openspigotchat.util.DebugUtils;
 import ru.fazziclay.openspigotchat.util.Utils;
 
 import java.util.ArrayList;
@@ -19,9 +17,9 @@ public class Chat {
 
     public static Chat getChatByType(String type1) {
         for (Chat chat : chats) {
-            Debug.debug("getChatByType(type=" + type1 + "): for: chat.type=" + chat.type);
+            DebugUtils.debug("getChatByType(type=" + type1 + "): for: chat.type=" + chat.type);
             if (chat.type.equals(type1)) {
-                Debug.debug("getChatByType(type=" + type1 + "): returned");
+                DebugUtils.debug("getChatByType(type=" + type1 + "): returned");
                 return chat;
             }
         }
@@ -46,7 +44,7 @@ public class Chat {
     }
 
     public void send(Player sender, String pattern, int range, ChatMessageType messageType) {
-        Debug.debug("Chat<object>.send(player=-, pattern="+pattern+", range="+range+", messageType=-");
+        DebugUtils.debug("Chat<object>.send(player=-, pattern="+pattern+", range="+range+", messageType=-");
         BaseComponent message = ChatUtils.convertToTextComponent(pattern);
         List<Player> recipients;
 
@@ -61,5 +59,9 @@ public class Chat {
         }
 
         Utils.print(message.toLegacyText());
+    }
+
+    public void sendBubbles(Player sender, String message) {
+
     }
 }

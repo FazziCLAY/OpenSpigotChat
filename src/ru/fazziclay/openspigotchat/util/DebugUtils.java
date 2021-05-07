@@ -2,7 +2,7 @@ package ru.fazziclay.openspigotchat.util;
 
 import ru.fazziclay.openspigotchat.Config;
 
-public class Debug {
+public class DebugUtils {
     public static void Test() {
         String a = "1";
         a.startsWith(null);
