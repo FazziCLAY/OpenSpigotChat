@@ -4,6 +4,7 @@
     <root id="archive" name="OpenSpigotChat.jar">
       <element id="module-output" name="OpenSpigotChat" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-20201115.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/LightChatBubbles.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

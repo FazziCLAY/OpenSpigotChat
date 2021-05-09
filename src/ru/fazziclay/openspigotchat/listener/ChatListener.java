@@ -2,7 +2,6 @@ package ru.fazziclay.openspigotchat.listener;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,10 +13,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import ru.fazziclay.openspigotchat.Chat;
 import ru.fazziclay.openspigotchat.Config;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
-import ru.fazziclay.openspigotchat.util.DebugUtils;
 import ru.fazziclay.openspigotchat.util.Utils;
-
-import java.util.regex.Pattern;
 
 
 public class ChatListener implements Listener {
@@ -25,12 +21,11 @@ public class ChatListener implements Listener {
             priority = EventPriority.HIGHEST
     )
     public void onJoin(PlayerJoinEvent event) {
-        String player_nickname = event.getPlayer().getName();
-        String player_uuid = event.getPlayer().getUniqueId().toString();
-
-        if (event.getJoinMessage() == null) {
+        if (!(Config.messageEnable) || event.getJoinMessage() == null) {
             return;
         }
+        String player_nickname = event.getPlayer().getName();
+        String player_uuid = event.getPlayer().getUniqueId().toString();
 
         BaseComponent message = ChatUtils.convertToTextComponent(Config.messageJoinPlayer
                 .replace("%player_nickname%", player_nickname)
@@ -47,12 +42,11 @@ public class ChatListener implements Listener {
             priority = EventPriority.HIGHEST
     )
     public void onLeave(PlayerQuitEvent event) {
-        String player_nickname = event.getPlayer().getName();
-        String player_uuid = event.getPlayer().getUniqueId().toString();
-
-        if (event.getQuitMessage() == null) {
+        if (!(Config.messageEnable) || event.getQuitMessage() == null) {
             return;
         }
+        String player_nickname = event.getPlayer().getName();
+        String player_uuid = event.getPlayer().getUniqueId().toString();
 
         BaseComponent message = ChatUtils.convertToTextComponent(Config.messageLeavePlayer
                 .replace("%player_nickname%", player_nickname)
@@ -69,41 +63,16 @@ public class ChatListener implements Listener {
             priority = EventPriority.HIGHEST
     )
     public void onChat(AsyncPlayerChatEvent event) {
-        String player_nickname = event.getPlayer().getName();
-        String player_uuid = event.getPlayer().getUniqueId().toString();
         String messageContent = event.getMessage();
+        Chat chat = Chat.getChatByName(Config.chatDefault);
 
-        for (Chat chat : Chat.chats) {
-            DebugUtils.debug("onChat(...): for: chat.type=" + chat.type);
-            if (chat.prefix == null) {
-                DebugUtils.debug("onChat(...): for: prefix==null: continue;");
-                continue;
-            }
-            if (messageContent.startsWith(chat.prefix) && messageContent.length() > chat.prefix.length()) {
-                DebugUtils.debug("onChat(...): for: prefix detected. chat.prefix="+chat.prefix);
-                chat.send(event.getPlayer(), chat.pattern
-                        .replace("%player_nickname%", player_nickname)
-                        .replace("%player_uuid%", player_uuid)
-                        .replace("%message_content%", messageContent.replaceFirst(Pattern.quote(chat.prefix), "")),
-                        chat.range,
-                        chat.messageType);
-                event.setCancelled(true);
-                return;
+        for (Chat currentChat : Chat.chats) {
+            if (currentChat.prefix != null && messageContent.startsWith(currentChat.prefix) && messageContent.length() > currentChat.prefix.length()) {
+                chat = currentChat;
             }
         }
 
-        Chat defaultChat = Chat.getChatByType(Config.chatDefault);
-        if (defaultChat != null) {
-            defaultChat.send(event.getPlayer(), defaultChat.pattern
-                    .replace("%player_nickname%", player_nickname)
-                    .replace("%player_uuid%", player_uuid)
-                    .replace("%message_content%", messageContent),
-                    defaultChat.range,
-                    defaultChat.messageType);
-
-        } else {
-            event.getPlayer().spigot().sendMessage(ChatMessageType.SYSTEM, new TextComponent("<Hardcoded text>: Error from OpenSpigotChat plugin. DefaultChat == null. Please contact server administrator or plugin developer https://fazziclay.ru/"));
-        }
+        Chat.sendMessage(chat, event.getPlayer(), messageContent);
         event.setCancelled(true);
     }
 }

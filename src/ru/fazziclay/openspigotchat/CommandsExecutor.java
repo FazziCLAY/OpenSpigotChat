@@ -5,12 +5,13 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
+import ru.fazziclay.openspigotchat.util.Utils;
 
 public class CommandsExecutor {
     public static void onDirectMessageCommand(CommandSender sender, Object[] args) {
         // Args
         Player recipientPlayer = (Player) args[0];
-        String message = (String) args[1];
+        String message = Utils.fixMessage((String) args[1]);
 
         // Variables
         String sender_nickname = sender.getName();
@@ -44,7 +45,7 @@ public class CommandsExecutor {
                 return;
             }
 
-            recipientPlayer.spigot().sendMessage(ChatMessageType.CHAT, senderPlayer.getUniqueId(), recipientMessage);
+            recipientPlayer.spigot().sendMessage(ChatMessageType.SYSTEM, senderPlayer.getUniqueId(), recipientMessage);
             senderPlayer.spigot().sendMessage(ChatMessageType.SYSTEM, senderMessage);
         } else {
             if (!recipientPlayer.isOnline()) {

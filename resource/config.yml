@@ -9,10 +9,12 @@ unregisterCommands:
   - ver
 
 message:
-  joinPlayer: '["",{"text":"%player_nickname%","color":"yellow","clickEvent":{"action":"suggest_command","value":"tell %player_nickname%"},"hoverEvent":{"action":"show_text","contents":"Click to send DM"}},{"text":" join to server!","color":"yellow"}]'
+  enable: true
+  joinPlayer: '["",{"text":"%player_nickname%","color":"yellow","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname%"},"hoverEvent":{"action":"show_text","contents":"Click to send DM"}},{"text":" join to server!","color":"yellow"}]'
   leavePlayer: '{"text":"%player_nickname% leave from server!","color":"yellow"}'
 
 directMessage:
+  enable: true
   commands:
     - tell
     - msg
@@ -31,12 +33,6 @@ chat:
   example:
     range: 50
     prefix: none
-    #chatBoobles:
-    #  enable: true
-    #  format: "&a&l"
-    #  maxWidth: 20
-    #  maxLines: 5
-    #  readSpeed: 120
     messageType: chat
     pattern: '[{"translate":"chat.type.text","with":[{"text":"%player_nickname%","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname% "},"hoverEvent":{"action":"show_text","contents":["Click to send a private message"]}},"%message_content%"]}]'
 

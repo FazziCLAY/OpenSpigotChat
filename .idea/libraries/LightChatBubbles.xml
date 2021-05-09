@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="LightChatBubbles">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/LightChatBubbles.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
