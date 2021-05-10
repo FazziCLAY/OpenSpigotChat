@@ -12,7 +12,7 @@ public class Utils {
         return source.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
-    public static void splitMessage(Player sender, String message){
-        String[] message_split = message.split("s");
+    public static void splitMessage(String message) {
+        String[] message_split = message.split(" ");
     }
 }
