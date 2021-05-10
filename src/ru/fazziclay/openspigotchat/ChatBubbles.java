@@ -52,7 +52,23 @@ public class ChatBubbles {
 
         String[] message_split = message.split(" ");
         for (int i=0; i < message_split.length; i++) {
-            if (message_split[i].length() <= MAX_LENGTH) {
+            if (msg.isEmpty()) {
+                msg = message_split[i];
+            } else {
+                if (msg.length() < MAX_LENGTH) {
+                    msg += message_split[i];
+                } else {
+                    addMessageToQueue(sender.getName(), message_split[i]);
+                }
+                if (msg.length() == MAX_LENGTH) {
+                    addMessageToQueue(sender.getName(), message_split[i]);
+                } else {
+                    msg += message_split[i];
+                }
+            }
+
+            // todo
+            if (message_split[i].length() > MAX_LENGTH) {
 
             }
         }
