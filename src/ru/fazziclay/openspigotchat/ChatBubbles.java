@@ -6,6 +6,7 @@ import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,56 +46,61 @@ public class ChatBubbles {
     // --- Queue --- (end)
 
     public static void onMessage(Player sender, String message) {
-        int MAX_LENGTH = 15; // Максимальная длинна в символах
-        int MAX_HEIGHT = 4;  // Максимальная высота в строках
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                int MAX_LENGTH = 15; // Максимальная длинна в символах
+                int MAX_HEIGHT = 4;  // Максимальная высота в строках
 
-        String msg = "";
+                String msg = "";
 
-        String[] message_split = message.split(" ");
-        for (int i=0; i < message_split.length; i++) {
-            if (msg.isEmpty()) {
-                msg = message_split[i];
-            } else {
-                if (msg.length() < MAX_LENGTH) {
-                    msg += message_split[i];
-                } else {
-                    addMessageToQueue(sender.getName(), message_split[i]);
-                }
-                if (msg.length() == MAX_LENGTH) {
-                    addMessageToQueue(sender.getName(), message_split[i]);
-                } else {
-                    msg += message_split[i];
-                }
-            }
-
-            // todo
-            if (message_split[i].length() > MAX_LENGTH) {
-
-            }
-        }
-
-        // to send
-        if (isQueueExist(sender.getName())) {
-            addMessageToQueue(sender.getName(), message);
-
-        } else {
-            int duration = 100 * 20;
-            createQueue(sender.getName());
-            spawnTextLine(sender, msg, duration);
-
-            OpenSpigotChat.getPlugin(OpenSpigotChat.class).getServer().getScheduler().scheduleAsyncRepeatingTask(OpenSpigotChat.getPlugin(OpenSpigotChat.class), new Runnable() {
-                public void run() {
-                    if (isQueueEmpty(sender.getName())) {
-                        deleteQueue(sender.getName());
-
+                String[] message_split = message.split(" ");
+                for (int i = 0; i < message_split.length; i++) {
+                    if (msg.isEmpty()) {
+                        msg = message_split[i];
                     } else {
-                        String a = getFirstMessage(sender.getName());
-                        onMessage(sender, a);
-                        removeMessageInQueue(sender.getName(), a);
+                        if (msg.length() < MAX_LENGTH) {
+                            msg += message_split[i];
+                        } else {
+                            addMessageToQueue(sender.getName(), message_split[i]);
+                        }
+                        if (msg.length() == MAX_LENGTH) {
+                            addMessageToQueue(sender.getName(), message_split[i]);
+                        } else {
+                            msg += message_split[i];
+                        }
+                    }
+
+                    // todo
+                    if (message_split[i].length() > MAX_LENGTH) {
+
                     }
                 }
-            }, duration, duration);
-        }
+
+                // to send
+                if (isQueueExist(sender.getName())) {
+                    addMessageToQueue(sender.getName(), message);
+
+                } else {
+                    int duration = 100 * 20;
+                    createQueue(sender.getName());
+                    spawnTextLine(sender, msg, duration);
+
+                    OpenSpigotChat.getPlugin(OpenSpigotChat.class).getServer().getScheduler().scheduleAsyncRepeatingTask(OpenSpigotChat.getPlugin(OpenSpigotChat.class), new Runnable() {
+                        public void run() {
+                            if (isQueueEmpty(sender.getName())) {
+                                deleteQueue(sender.getName());
+
+                            } else {
+                                String a = getFirstMessage(sender.getName());
+                                onMessage(sender, a);
+                                removeMessageInQueue(sender.getName(), a);
+                            }
+                        }
+                    }, duration, duration);
+                }
+            }
+        }.runTaskLater(OpenSpigotChat.getPlugin(OpenSpigotChat.class), 0);
     }
 
     public static void spawnTextLine(Entity sender, String message, int duration) {

@@ -5,6 +5,7 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,6 +59,18 @@ public class OpenSpigotChat extends JavaPlugin {
                         .register();
             }
         }
+
+        new CommandAPICommand("bubbledebug")
+                .withSubcommand(new CommandAPICommand("spawn_text_bubble")
+                        .withArguments(new PlayerArgument("ot_kogo_spawnit"), new GreedyStringArgument("message"))
+                        .executes((sender, args) -> {
+                            Player p = (Player) args[0];
+                            String  message = (String) args[1];
+
+                            ChatBubbles.spawnTextLine(p, message, 10*20);
+                        })
+                )
+                .register();
         DebugUtils.objectDebug(this, "loadCommands()", "loaded!");
     }
 }
