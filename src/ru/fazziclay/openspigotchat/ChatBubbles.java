@@ -60,7 +60,11 @@ public class ChatBubbles {
                 String msg = "";
 
                 String[] words = message.split(" ");
-
+                for (int i = 0; i < words.length; i++) {
+                    for (int o = 0; o< 4; o++) {
+                        msg = "";
+                    }
+                }
 
                 // to send
                 if (isQueueExist(sender.getName())) {
