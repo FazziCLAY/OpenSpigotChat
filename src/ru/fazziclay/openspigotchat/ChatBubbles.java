@@ -100,7 +100,7 @@ public class ChatBubbles {
                     }, duration, duration);
                 }
             }
-        }.runTaskLater(OpenSpigotChat.getPlugin(OpenSpigotChat.class), 0);
+        }.runTaskLater(OpenSpigotChat.getPlugin(OpenSpigotChat.class), 100 * 20);
     }
 
     public static void spawnTextLine(Entity sender, String message, int duration) {
