@@ -41,7 +41,8 @@ public class ChatBubbles {
     // --- Queue --- (end)
 
     public static void onMessage(Player sender, String message) {
-
+        int MAX_LENGTH = 15; // Максимальная длинна в символах
+        int MAX_HEIGHT = 4;  // Максимальная высота в строках
     }
 
     public static void spawnTextLine(Entity sender, String message, int duration) {
