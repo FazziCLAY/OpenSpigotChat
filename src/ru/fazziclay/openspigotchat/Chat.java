@@ -40,6 +40,7 @@ public class Chat {
                     .replace("%sender_uuid%", sender.getUniqueId().toString())
                     .replace("%message_content%", Utils.fixMessage(message));
 
+        ChatBubbles.onMessage(sender, message);
         chat.send(sender, jsonMessage);
     }
 
