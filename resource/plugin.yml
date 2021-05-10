@@ -1,6 +1,6 @@
 name: "OpenSpigotChat"
 description: "Super Vanilla Spigot Chat Plugin"
-author: "https://fazziclay.ru/"
+author: "https://github.com/fazziclay"
 website: "https://github.com/fazziclay/OpenSpigotChat/"
 main: "ru.fazziclay.openspigotchat.OpenSpigotChat"
 api-version: 1.13
