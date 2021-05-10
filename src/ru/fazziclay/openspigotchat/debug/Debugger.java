@@ -1,28 +1,60 @@
 package ru.fazziclay.openspigotchat.debug;
 
-import ru.fazziclay.openspigotchat.util.DebugUtils;
-import ru.fazziclay.openspigotchat.util.Utils;
+import ru.fazziclay.openspigotchat.Config;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class Debugger {
-    String fileName;
-    String functionName;
-    int random;
+    // Static
+    public static void printDebugMessage(String message) {
+        if (!Config.isDebugEnable) {
+            return;
+        }
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss:SSS");
+        LocalDateTime now = LocalDateTime.now();
+
+        System.out.println(Color.RESET + "["+dtf.format(now)+"] [DEBUG] " + message);
+    }
+
+    public static int getRandom(int minimum, int maximum) {
+        Random random = new Random(System.currentTimeMillis());
+        return random.nextInt(maximum - minimum + 1) + minimum;
+    }
+
+    // Object
+    private final String fileName;
+    private final String functionName;
+    private final int random = getRandom(0, 999);
+
+    public Debugger(String fileName, String functionName, String args) {
+        this.fileName       = fileName;
+        this.functionName   = functionName;
+
+        printDebugMessage(String.format(Color.GREEN + "[%s:%s.%s] Called! Args=(%s)", fileName, functionName, random, args));
+    }
 
     public Debugger(String fileName, String functionName) {
         this.fileName       = fileName;
         this.functionName   = functionName;
-        this.random         = Utils.getRandom(100, 999);
 
-        DebugUtils.debug(String.format("[%s:%d] started %s", fileName, random, functionName));
-    }
-
-    public void args(String args) {
-        DebugUtils.debug(String.format("[%s:%d] %s ARGS=%d", fileName, random, functionName, args));
+        printDebugMessage(String.format(Color.GREEN + "[%s:%s.%s] Called!", fileName, functionName, random));
     }
 
     public void log(String message) {
-        DebugUtils.debug(String.format("[%s:%d] %s: %d", fileName, random, functionName, message));
+        printDebugMessage(String.format(Color.YELLOW + "[%s:%s.%s]: %s", fileName, functionName, random, message));
     }
+
+    public void error(String message) {
+        printDebugMessage(String.format(Color.RED + "[%s:%s.%s] [ERROR]: %s", fileName, functionName, random, message));
+    }
+}
+
+class Color {
+    public static String RESET="\u001B[0m";
+    public static String RED="\u001B[31m";
+    public static String GREEN="\u001B[32m";
+    public static String YELLOW="\u001B[33m";
 }

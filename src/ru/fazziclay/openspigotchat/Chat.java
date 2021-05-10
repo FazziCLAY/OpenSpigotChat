@@ -17,8 +17,7 @@ public class Chat {
     public static List<Chat> chats = new ArrayList<>(); // Обьекты чатов из конфига
 
     public static Chat getChatByName(String type) {
-        Debugger debugger = new Debugger("Chat", "getChatByName");
-        debugger.args("type="+type);
+        Debugger debugger = new Debugger("Chat", "getChatByName", "type="+type);
 
         for (Chat chat : chats) {
             debugger.log("for(chat.name="+chat.name+")");
@@ -45,7 +44,7 @@ public class Chat {
                     .replace("%message_content%", Utils.fixMessage(message));
 
         chat.send(sender, jsonMessage);
-        ChatBubbles.onMessage(sender, message);
+        //ChatBubbles.onMessage(sender, message);
     }
 
     // Object

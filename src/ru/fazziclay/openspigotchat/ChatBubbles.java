@@ -47,8 +47,7 @@ public class ChatBubbles {
     // --- Queue --- (end)
 
     public static void onMessage(Player sender, String message) {
-        Debugger debugger = new Debugger("ChatBubbles", "onMessage");
-        debugger.args("sender(name)="+sender.getName()+", message="+message);
+        Debugger debugger = new Debugger("ChatBubbles", "onMessage", "sender(name)="+sender.getName()+", message="+message);
 
         new BukkitRunnable() {
             @Override
@@ -103,8 +102,7 @@ public class ChatBubbles {
     }
 
     public static AreaEffectCloud spawnTextLine(Entity sender, String message, int duration) {
-        Debugger debugger = new Debugger("ChatBubbles", "spawnTextLine");
-        debugger.args("sender(name)="+sender.getName()+", message="+message+", duration="+duration);
+        Debugger debugger = new Debugger("ChatBubbles", "spawnTextLine", "sender(name)="+sender.getName()+", message="+message+", duration="+duration);
 
         Location spawnLocation = sender.getLocation();
         spawnLocation.setY(1024);

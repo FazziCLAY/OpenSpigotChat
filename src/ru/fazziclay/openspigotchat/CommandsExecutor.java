@@ -12,8 +12,9 @@ import java.util.Arrays;
 
 public class CommandsExecutor {
     public static void onDirectMessageCommand(CommandSender sender, Object[] args) {
-        Debugger debugger = new Debugger("CommandsExecutor", "onDirectMessageCommand");
-        debugger.args("sender(name)="+sender.getName()+", args=" + Arrays.toString(args));
+        Debugger debugger = new Debugger("CommandsExecutor",
+                "onDirectMessageCommand",
+                "sender(name)="+sender.getName()+", args=" + Arrays.toString(args));
 
         // Args
         Player recipientPlayer = (Player) args[0];

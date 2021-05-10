@@ -17,7 +17,7 @@ unregisterCommands:
 #   | %player_nickname% - The nickname of the player
 message:
   enable: true
-  joinPlayer: '{"translate":"multiplayer.player.joined", ,"color":"yellow", "with":[{"text":"%player_nickname%","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname% "},"hoverEvent":{"action":"show_text","contents":["Click to send a private message!"]}}]}'
+  joinPlayer: '{"translate":"multiplayer.player.joined", "color":"yellow", "with":[{"text":"%player_nickname%","clickEvent":{"action":"suggest_command","value":"/tell %player_nickname% "},"hoverEvent":{"action":"show_text","contents":["Click to send a private message!"]}}]}'
   leavePlayer: '{"translate":"multiplayer.player.left", "color":"yellow", "with": ["%player_nickname%"]}'
 
 
