@@ -6,6 +6,7 @@ import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.fazziclay.openspigotchat.listener.ChatListener;
 import ru.fazziclay.openspigotchat.util.DebugUtils;
@@ -35,7 +36,10 @@ public class OpenSpigotChat extends JavaPlugin {
     }
 
     public void loadPermissions() {
-        Bukkit.getPluginManager().addPermission(new Permission("openspigotchat.direct_message"));
+        Permission permission = new Permission("openspigotchat.direct_message");
+        permission.setDefault(PermissionDefault.TRUE);
+        permission.setDescription("Use direct message command");
+        Bukkit.getPluginManager().addPermission(permission);
         DebugUtils.objectDebug(this, "loadPermissions()", "loaded!");
     }
 

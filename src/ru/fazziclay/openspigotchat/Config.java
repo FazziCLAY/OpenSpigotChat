@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Config {
     public static FileConfiguration configFile;                 // Файл конфига
-    public static boolean isDebugEnable = true;                 // Включён ли режим отладки
+    public static boolean isDebugEnable = false;                 // Включён ли режим отладки
     public static String errorText1 = "[\"\",{\"translate\":\"chat.cannotSend\",\"color\":\"red\"},\"\\n\",{\"text\":\"OpenSpigotChat: Error to sending message: chat == null!\",\"color\":\"red\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://fazziclay.ru/\"},\"hoverEvent\":{\"action\":\"show_text\",\"contents\":[{\"text\":\"FeedBack to plugin developer! https://fazziclay.ru/\",\"color\":\"gray\"}]}}]";
 
     public static List<String>  unregisterCommands;             // Команды которые должны быть удалены с сервера (CommandAPI)

@@ -28,15 +28,17 @@ public class Chat {
     }
 
     public static void sendMessage(Chat chat, Player sender, String message) {
-        if (chat == null) {
+        if (sender == null) {
+            return;
+        }
+        if (chat == null || message == null) {
             sender.spigot().sendMessage(ChatMessageType.SYSTEM, ChatUtils.convertToTextComponent(Config.errorText1));
             return;
         }
         String jsonMessage = chat.pattern
                     .replace("%sender_name%", sender.getName())
-                    .replace("%sender_uuid%", sender.getUniqueId().toString()
-                    .replace("%message_content%", Utils.fixMessage(message))
-                );
+                    .replace("%sender_uuid%", sender.getUniqueId().toString())
+                    .replace("%message_content%", Utils.fixMessage(message));
 
         chat.send(sender, jsonMessage);
     }
