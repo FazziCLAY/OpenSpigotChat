@@ -1,6 +1,5 @@
 package ru.fazziclay.openspigotchat;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.AreaEffectCloud;
@@ -39,30 +38,46 @@ public class ChatBubbles {
     public static boolean isQueueEmpty(String nickname) { // Пустая ли очередь у игрока
         return queue.get(nickname).isEmpty();
     }
+
+    public static String getFirstMessage(String nickname) { // Создать пустую очередь для игрока
+        return queue.get(nickname).get(0);
+    }
     // --- Queue --- (end)
 
     public static void onMessage(Player sender, String message) {
         int MAX_LENGTH = 15; // Максимальная длинна в символах
-        // привет привет а
         int MAX_HEIGHT = 4;  // Максимальная высота в строках
+
+        String msg = "";
+
         String[] message_split = message.split(" ");
         for (int i=0; i < message_split.length; i++) {
             if (message_split[i].length() <= MAX_LENGTH) {
-                if (isQueueExist(sender.getName())) {
-                    addMessageToQueue(sender.getName(), message);
-                }
-                else
-                {
-                    createQueue(sender.getName());
-                    spawnTextLine(sender, message_split[i], 100 * 20);
 
-                    OpenSpigotChat.getPlugin(OpenSpigotChat.class).getServer().getScheduler().scheduleAsyncRepeatingTask(OpenSpigotChat.getPlugin(OpenSpigotChat.class), new Runnable() {
-                        public void run() {
-
-                        }
-                    }, 1200, 1200);
-                }
             }
+        }
+
+        // to send
+        if (isQueueExist(sender.getName())) {
+            addMessageToQueue(sender.getName(), message);
+
+        } else {
+            int duration = 100 * 20;
+            createQueue(sender.getName());
+            spawnTextLine(sender, msg, duration);
+
+            OpenSpigotChat.getPlugin(OpenSpigotChat.class).getServer().getScheduler().scheduleAsyncRepeatingTask(OpenSpigotChat.getPlugin(OpenSpigotChat.class), new Runnable() {
+                public void run() {
+                    if (isQueueEmpty(sender.getName())) {
+                        deleteQueue(sender.getName());
+
+                    } else {
+                        String a = getFirstMessage(sender.getName());
+                        onMessage(sender, a);
+                        removeMessageInQueue(sender.getName(), a);
+                    }
+                }
+            }, duration, duration);
         }
     }
 
