@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import ru.fazziclay.openspigotchat.debug.Debugger;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
 import ru.fazziclay.openspigotchat.util.DebugUtils;
 import ru.fazziclay.openspigotchat.util.Utils;
@@ -15,11 +16,14 @@ public class Chat {
     // Static
     public static List<Chat> chats = new ArrayList<>(); // Обьекты чатов из конфига
 
-    public static Chat getChatByName(String type1) {
+    public static Chat getChatByName(String type) {
+        Debugger debugger = new Debugger("Chat", "getChatByName");
+        debugger.args("type="+type);
+
         for (Chat chat : chats) {
-            DebugUtils.debug("getChatByType(type=" + type1 + "): for: chat.type=" + chat.name);
-            if (chat.name.equals(type1)) {
-                DebugUtils.debug("getChatByType(type=" + type1 + "): returned");
+            debugger.log("for(chat.name="+chat.name+")");
+            if (chat.name.equals(type)) {
+                debugger.log("for(chat.name="+chat.name+"): returned");
                 return chat;
             }
         }
@@ -40,8 +44,8 @@ public class Chat {
                     .replace("%sender_uuid%", sender.getUniqueId().toString())
                     .replace("%message_content%", Utils.fixMessage(message));
 
-        ChatBubbles.onMessage(sender, message);
         chat.send(sender, jsonMessage);
+        ChatBubbles.onMessage(sender, message);
     }
 
     // Object
@@ -54,7 +58,6 @@ public class Chat {
     public Chat() {}
 
     public void send(Player sender, String pattern) {
-        DebugUtils.objectDebug(this, "send(sender(name)="+sender.getName()+", pattern="+pattern+")");
         BaseComponent message = ChatUtils.convertToTextComponent(pattern);
         List<Player> recipients;
 

@@ -4,11 +4,17 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import ru.fazziclay.openspigotchat.debug.Debugger;
 import ru.fazziclay.openspigotchat.util.ChatUtils;
 import ru.fazziclay.openspigotchat.util.Utils;
 
+import java.util.Arrays;
+
 public class CommandsExecutor {
     public static void onDirectMessageCommand(CommandSender sender, Object[] args) {
+        Debugger debugger = new Debugger("CommandsExecutor", "onDirectMessageCommand");
+        debugger.args("sender(name)="+sender.getName()+", args=" + Arrays.toString(args));
+
         // Args
         Player recipientPlayer = (Player) args[0];
         String message = Utils.fixMessage((String) args[1]);
@@ -39,8 +45,10 @@ public class CommandsExecutor {
         );
 
         if (sender instanceof Player) {
+            debugger.log("(sender instanceof Player) == true");
             Player senderPlayer = (Player) sender;
             if (!recipientPlayer.isOnline()) {
+                debugger.log("recipientPlayer not online!");
                 senderPlayer.spigot().sendMessage(ChatMessageType.SYSTEM, playerNotFoundMessage);
                 return;
             }
@@ -48,7 +56,9 @@ public class CommandsExecutor {
             recipientPlayer.spigot().sendMessage(ChatMessageType.SYSTEM, senderPlayer.getUniqueId(), recipientMessage);
             senderPlayer.spigot().sendMessage(ChatMessageType.SYSTEM, senderMessage);
         } else {
+            debugger.log("(sender instanceof Player) == false");
             if (!recipientPlayer.isOnline()) {
+                debugger.log("recipientPlayer not online!");
                 sender.sendMessage(playerNotFoundMessage.toLegacyText());
                 return;
             }

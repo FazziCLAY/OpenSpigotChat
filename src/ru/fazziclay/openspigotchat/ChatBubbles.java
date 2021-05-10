@@ -88,13 +88,13 @@ public class ChatBubbles {
         }.runTaskLater(OpenSpigotChat.getPlugin(OpenSpigotChat.class), 0);
     }
 
-    public static void splitInLines(Entity sender, String message, int duration) {
-        Entity entity = sender;
-
+    public static void spawnTextScreen(Entity sender, String message, int duration) {
         String[] lines = message.split("\n");
 
-        for (String str : lines) {
-            entity = spawnTextLine(entity, str, duration);
+        Entity vehicle = sender;
+        for (int i = lines.length-1; i > 0; i--) {
+            String str = lines[i];
+            vehicle = spawnTextLine(vehicle, str, duration);
         }
     }
 

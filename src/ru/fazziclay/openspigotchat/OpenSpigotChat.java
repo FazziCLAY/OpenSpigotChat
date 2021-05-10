@@ -10,7 +10,6 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.fazziclay.openspigotchat.listener.ChatListener;
-import ru.fazziclay.openspigotchat.util.DebugUtils;
 import ru.fazziclay.openspigotchat.util.Utils;
 
 public class OpenSpigotChat extends JavaPlugin {
@@ -24,7 +23,7 @@ public class OpenSpigotChat extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
 
         } catch (Exception e) {
-            Utils.print("Plugin starting error: " + e);
+            Bukkit.getLogger().info("Plugin starting error: " + e);
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
