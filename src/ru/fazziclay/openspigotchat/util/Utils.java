@@ -3,6 +3,8 @@ package ru.fazziclay.openspigotchat.util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Random;
+
 public class Utils {
     public static void print(String message) {
         Bukkit.getLogger().info(message);
@@ -12,7 +14,8 @@ public class Utils {
         return source.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
-    public static void splitMessage(String message) {
-        String[] message_split = message.split(" ");
+    public static int getRandom(int minimum, int maximum) { // Получение случайного числа в диапозоне
+        Random random = new Random(System.currentTimeMillis());
+        return random.nextInt(maximum - minimum + 1) + minimum;
     }
 }

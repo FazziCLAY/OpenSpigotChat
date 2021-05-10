@@ -2,7 +2,7 @@ package ru.fazziclay.openspigotchat;
 
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.configuration.file.FileConfiguration;
-import ru.fazziclay.openspigotchat.util.DebugUtils;
+import ru.fazziclay.openspigotchat.debug.Debugger;
 
 import java.util.List;
 
@@ -25,13 +25,13 @@ public class Config {
     public static String        chatDefault;                    // Стандартный чат (Без префикса)
 
     public static void loadConfig() {
-        DebugUtils.staticDebug("Config", "loadConfig()");
+        Debugger debugger = new Debugger("Config", "loadConfig");
 
         // Load configFile
         OpenSpigotChat.getPlugin(OpenSpigotChat.class).getConfig().options().copyDefaults(true);
         OpenSpigotChat.getPlugin(OpenSpigotChat.class).saveConfig();
         configFile = OpenSpigotChat.getPlugin(OpenSpigotChat.class).getConfig();
-        DebugUtils.staticDebug("Config", "loadConfig()", "file loaded!");
+        debugger.log("configFile loaded!");
 
         // Load Config variables
         unregisterCommands = getStringList("unregisterCommands");
@@ -47,16 +47,12 @@ public class Config {
         chatList    = getStringList("chat.list");
         chatDefault = getString("chat.default");
 
-        DebugUtils.staticDebug("Config", "loadConfig()", "variable loaded!");
+        debugger.log("variables loaded!");
     }
 
     public static void loadChats() {
-        DebugUtils.staticDebug("Config", "loadChats()");
-
         Chat.chats.clear();
         for (String chatName : chatList) {
-            DebugUtils.staticDebug("Config", "loadChats()", "loop: chatName="+chatName);
-
             String configPath = "chat."+chatName;
 
             ChatMessageType messageType = ChatMessageType.valueOf(getString(configPath+".messageType").toUpperCase());
@@ -75,8 +71,6 @@ public class Config {
 
             Chat.chats.add(chat);
         }
-
-        DebugUtils.staticDebug("Config", "loadChats()", "loaded!");
     }
 
     public static String getString(String path) {

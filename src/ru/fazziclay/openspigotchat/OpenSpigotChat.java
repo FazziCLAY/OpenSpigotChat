@@ -39,9 +39,7 @@ public class OpenSpigotChat extends JavaPlugin {
     public void loadPermissions() {
         Permission permission = new Permission("openspigotchat.direct_message");
         permission.setDefault(PermissionDefault.TRUE);
-        permission.setDescription("Use direct message command");
         Bukkit.getPluginManager().addPermission(permission);
-        DebugUtils.objectDebug(this, "loadPermissions()", "loaded!");
     }
 
     public void loadCommands() {
@@ -71,6 +69,5 @@ public class OpenSpigotChat extends JavaPlugin {
                         })
                 )
                 .register();
-        DebugUtils.objectDebug(this, "loadCommands()", "loaded!");
     }
 }

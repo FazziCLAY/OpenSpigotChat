@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import ru.fazziclay.openspigotchat.debug.Debugger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,36 +47,20 @@ public class ChatBubbles {
     // --- Queue --- (end)
 
     public static void onMessage(Player sender, String message) {
+        Debugger debugger = new Debugger("ChatBubbles", "onMessage");
+        debugger.args("sender(name)="+sender.getName()+", message="+message);
+
         new BukkitRunnable() {
             @Override
             public void run() {
+                debugger.log("BukkitRunnable.run()");
                 int MAX_LENGTH = 15; // Максимальная длинна в символах
                 int MAX_HEIGHT = 4;  // Максимальная высота в строках
 
                 String msg = "";
 
-                String[] message_split = message.split(" ");
-                for (int i = 0; i < message_split.length; i++) {
-                    if (msg.isEmpty()) {
-                        msg = message_split[i];
-                    } else {
-                        if (msg.length() < MAX_LENGTH) {
-                            msg += message_split[i];
-                        } else {
-                            addMessageToQueue(sender.getName(), message_split[i]);
-                        }
-                        if (msg.length() == MAX_LENGTH) {
-                            addMessageToQueue(sender.getName(), message_split[i]);
-                        } else {
-                            msg += message_split[i];
-                        }
-                    }
+                String[] words = message.split(" ");
 
-                    // todo
-                    if (message_split[i].length() > MAX_LENGTH) {
-
-                    }
-                }
 
                 // to send
                 if (isQueueExist(sender.getName())) {
@@ -100,10 +85,23 @@ public class ChatBubbles {
                     }, duration, duration);
                 }
             }
-        }.runTaskLater(OpenSpigotChat.getPlugin(OpenSpigotChat.class), 100 * 20);
+        }.runTaskLater(OpenSpigotChat.getPlugin(OpenSpigotChat.class), 0);
     }
 
-    public static void spawnTextLine(Entity sender, String message, int duration) {
+    public static void splitInLines(Entity sender, String message, int duration) {
+        Entity entity = sender;
+
+        String[] lines = message.split("\n");
+
+        for (String str : lines) {
+            entity = spawnTextLine(entity, str, duration);
+        }
+    }
+
+    public static AreaEffectCloud spawnTextLine(Entity sender, String message, int duration) {
+        Debugger debugger = new Debugger("ChatBubbles", "spawnTextLine");
+        debugger.args("sender(name)="+sender.getName()+", message="+message+", duration="+duration);
+
         Location spawnLocation = sender.getLocation();
         spawnLocation.setY(1024);
         World spawnWorld = sender.getWorld();
@@ -114,5 +112,6 @@ public class ChatBubbles {
         text.setCustomName(message);
         text.setCustomNameVisible(true);
         sender.addPassenger(text);
+        return text;
     }
 }
