@@ -41,10 +41,10 @@ public class Chat {
         String jsonMessage = chat.pattern
                     .replace("%sender_name%", sender.getName())
                     .replace("%sender_uuid%", sender.getUniqueId().toString())
-                    .replace("%message_content%", Utils.fixMessage(message));
+                    .replace("%message_content%", Utils.fixMessage(message.replaceFirst(chat.prefix, "")));
 
         chat.send(sender, jsonMessage);
-        //ChatBubbles.onMessage(sender, message);
+        //ChatBubbles.onMessage(sender, message.replaceFirst(chat.prefix, ""));
     }
 
     // Object

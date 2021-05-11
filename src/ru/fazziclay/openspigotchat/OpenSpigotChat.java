@@ -2,9 +2,12 @@ package ru.fazziclay.openspigotchat;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.CommandPermission;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -57,14 +60,25 @@ public class OpenSpigotChat extends JavaPlugin {
             }
         }
 
+        CommandAPI.unregister("bubbledebug", true);
         new CommandAPICommand("bubbledebug")
-                .withSubcommand(new CommandAPICommand("spawn_text_bubble")
-                        .withArguments(new PlayerArgument("ot_kogo_spawnit"), new GreedyStringArgument("message"))
+                .withPermission(CommandPermission.OP)
+                .withSubcommand(new CommandAPICommand("spawnTextLine")
+                        .withArguments(new EntitySelectorArgument("entity"), new GreedyStringArgument("message"))
                         .executes((sender, args) -> {
-                            Player p = (Player) args[0];
-                            String  message = (String) args[1];
+                            Entity p = (Entity) args[0];
+                            String message = ((String) args[1]).replace("\\n", "\n");
 
                             ChatBubbles.spawnTextLine(p, message, 10*20);
+                        })
+                )
+                .withSubcommand(new CommandAPICommand("spawnTextScreen")
+                        .withArguments(new EntitySelectorArgument("entity"), new GreedyStringArgument("message"))
+                        .executes((sender, args) -> {
+                            Entity p = (Entity) args[0];
+                            String message = ((String) args[1]).replace("\\n", "\n");
+
+                            ChatBubbles.spawnTextScreen(p, message, 10*20);
                         })
                 )
                 .register();
