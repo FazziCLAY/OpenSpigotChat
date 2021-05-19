@@ -8,12 +8,10 @@ import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.fazziclay.openspigotchat.listener.ChatListener;
-import ru.fazziclay.openspigotchat.util.Utils;
 
 public class OpenSpigotChat extends JavaPlugin {
     @Override

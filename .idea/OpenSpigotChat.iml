@@ -9,8 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="spigot-1.16.5" level="project" />
-    <orderEntry type="library" name="json-20201115" level="project" />
     <orderEntry type="library" name="CommandAPI" level="project" />
-    <orderEntry type="library" name="LightChatBubbles" level="project" />
   </component>
 </module>

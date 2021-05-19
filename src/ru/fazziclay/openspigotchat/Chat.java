@@ -38,6 +38,7 @@ public class Chat {
             sender.spigot().sendMessage(ChatMessageType.SYSTEM, ChatUtils.convertToTextComponent(Config.errorText1));
             return;
         }
+
         String jsonMessage = chat.pattern
                     .replace("%sender_name%", sender.getName())
                     .replace("%sender_uuid%", sender.getUniqueId().toString())

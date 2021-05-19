@@ -60,7 +60,7 @@ public class Config {
             String prefix               = getString(configPath+".prefix");
             int range                   = getInt(configPath+".range");
 
-            if (prefix.equals("none")) prefix = null;
+            if (prefix.equals("none")) prefix = "";
 
             Chat chat = new Chat();
             chat.name = chatName;
