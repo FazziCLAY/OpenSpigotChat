@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="CommandAPI">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/CommandAPI.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/CommandAPI.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
